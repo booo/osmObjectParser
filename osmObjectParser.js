@@ -1,7 +1,5 @@
 var libxml = require("../libxmljs/libxmljs.node");
 var events = require('events');
-filename = __dirname + "/../berlin.osm";
-
 
 var OsmObjectParser = function() {
     events.EventEmitter.call(this);
