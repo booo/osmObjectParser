@@ -4,7 +4,7 @@ var events = require('events');
 var OsmObjectParser = function() {
     events.EventEmitter.call(this);
     var that = this; 
-    this.parser = new libxml.SaxParser(function(cb) {
+    this.parser = new libxml.SaxPushParser(function(cb) {
         //useless?
         var pjo = {
             tags    :   []
@@ -63,10 +63,7 @@ var OsmObjectParser = function() {
         cb.onError(function(msg) {
             console.log(msg);
         });
-});
-
-
-
+    });
 };
 
 OsmObjectParser.super_ = events.EventEmitter;
@@ -77,8 +74,29 @@ OsmObjectParser.prototype = Object.create(events.EventEmitter.prototype, {
     }
 });
 
-OsmObjectParser.prototype.parseFile = function(filename) {
-    this.parser.parseFile(filename); 
+OsmObjectParser.prototype.parseFile = function(filename,callback) {
+    var inputFile = require('fs').createReadStream(filename,{encoding:'utf-8'});
+    var that = this;
+    inputFile.on('error', function(error) {
+        if(callback) {
+            callback(error);
+        }
+    });
+    inputFile.on('data', function(data) {
+        if(data) {
+            if(that.parser.push(data)) {
+            }
+            else {
+                callback('could not push data');
+            }
+        }
+        else {
+            callback('no data in on event');
+        }
+    });
+    if(callback) {
+        inputFile.on('end',callback);
+    }
 };
 
 module.exports = new OsmObjectParser();
