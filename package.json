@@ -1,0 +1,17 @@
+{
+    'name'          :   'osmObjectParser',
+    'version'       :   '0.0.23',
+    'description'   :   'xml parser with callbacks for osm data primitives',
+    'keywords'      :   ['osm','xml','parser'],
+    'maintainers'   :   [{
+                            'name'  :   'booo',
+                            'email' :   'borgers@mi.fu-berlin.de',
+                            'web'   :   'osm.spline.de'
+                        }],
+    'bugs'          :   { 'web' :   'https://github.com/booo/osmObjectParser/issues'},
+    'licenses'      :   [],
+    'repositories'  :   [],
+    'dependencies'  :   {
+                            'libxmljs'  :   '*',
+                        }
+}
